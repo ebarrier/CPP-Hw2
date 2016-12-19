@@ -1,11 +1,18 @@
 #include <SFML/Graphics.hpp>
 
+void initializeGridValues(unsigned int &width, unsigned int &height, unsigned int &nuberSquareWidth, unsigned int &nuberSquareHeight, unsigned int &squareSize, unsigned int &offset);
+
 int main()
 {
-	unsigned int width = 1600;
-	unsigned int height = 1000;
+	unsigned int width;
+	unsigned int height;
+	unsigned int nuberSquareWidth = 50;
+	unsigned int nuberSquareHeight = 30;
 	unsigned int squareSize = 20;
 	unsigned int offset = 1;
+
+	initializeGridValues(width, height, nuberSquareWidth, nuberSquareHeight, squareSize, offset);
+
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Etienne's Game Of Life!");
 	sf::VertexArray square(sf::Quads, 4);
@@ -63,4 +70,27 @@ int main()
 	}
 
 	return 0;
+}
+
+void initializeGridValues(unsigned int &width, unsigned int &height, unsigned int &nuberSquareWidth, unsigned int &nuberSquareHeight, unsigned int &squareSize, unsigned int &offset)
+{
+	if (nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1) > 1800 || nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1) > 900)
+	{
+		nuberSquareWidth = floor(1600 / squareSize);
+		nuberSquareHeight = floor(900 / squareSize);
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
+	else if (nuberSquareWidth < 5 || nuberSquareHeight < 5)
+	{
+		nuberSquareWidth = 5;
+		nuberSquareHeight = 5;
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
+	else
+	{
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
 }
