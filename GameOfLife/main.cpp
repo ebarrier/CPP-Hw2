@@ -1,21 +1,23 @@
 #include <SFML/Graphics.hpp>
+#include "square.h"
 
-void initializeGridValues(unsigned int &width, unsigned int &height, unsigned int &nuberSquareWidth, unsigned int &nuberSquareHeight, unsigned int &squareSize, unsigned int &offset);
-void drawGrid(unsigned int &width, unsigned int &height, unsigned int &squareSize, unsigned int &offset, sf::RenderWindow &window, sf::VertexArray &square);
+void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset);
+void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, sf::RectangleShape &square);
 
 int main()
 {
-	unsigned int width;
-	unsigned int height;
-	unsigned int nuberSquareWidth = 50;
-	unsigned int nuberSquareHeight = 30;
-	unsigned int squareSize = 20;
-	unsigned int offset = 1;
+	//all global variables should be const
+	int width;
+	int height;
+	int numberSquareWidth = 15;
+	int numberSquareHeight = 15;
+	int squareSize = 20;
+	int offset = 1;
 
-	initializeGridValues(width, height, nuberSquareWidth, nuberSquareHeight, squareSize, offset);
+	initializeGridValues(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset);
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Etienne's Game Of Life!");
-	sf::VertexArray square(sf::Quads, 4);
+	sf::RectangleShape square(sf::Vector2f(squareSize, squareSize));
 
 	while (window.isOpen())
 	{
@@ -25,19 +27,16 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		window.clear();
-		
+		window.clear(sf::Color::Black);
 		drawGrid(width, height, squareSize, offset, window, square);
-		
 		window.display();
 	}
-
 	return 0;
 }
 
 
 
-void initializeGridValues(unsigned int &width, unsigned int &height, unsigned int &nuberSquareWidth, unsigned int &nuberSquareHeight, unsigned int &squareSize, unsigned int &offset)
+void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset)
 {
 	if (nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1) > 1800 || nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1) > 900)
 	{
@@ -60,13 +59,12 @@ void initializeGridValues(unsigned int &width, unsigned int &height, unsigned in
 	}
 }
 
-void drawGrid(unsigned int &width, unsigned int &height, unsigned int &squareSize, unsigned int &offset, sf::RenderWindow &window, sf::VertexArray &square)
+void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, sf::RectangleShape &square)
 {
-
-	float previousY = 0;
+	int previousY = 0;
 	for (size_t j = 0; j < height; j += squareSize)
 	{
-		unsigned int offsetv;
+		int offsetv;
 		if (j == 0)
 		{
 			offsetv = 0;
@@ -75,11 +73,11 @@ void drawGrid(unsigned int &width, unsigned int &height, unsigned int &squareSiz
 		{
 			offsetv = offset;
 		}
-		float previousX = 0;
 
+		int previousX = 0;
 		for (size_t i = 0; i < width; i += squareSize)
 		{
-			unsigned int offseth;
+			int offseth;
 			if (i == 0)
 			{
 				offseth = 0;
@@ -89,14 +87,8 @@ void drawGrid(unsigned int &width, unsigned int &height, unsigned int &squareSiz
 				offseth = offset;
 			}
 
-			square[0].position = sf::Vector2f(previousX + offseth, previousY + offsetv);
-			square[0].color = sf::Color::White;
-			square[1].position = sf::Vector2f(previousX + squareSize + offseth, previousY + offsetv);
-			square[1].color = sf::Color::White;
-			square[2].position = sf::Vector2f(previousX + squareSize + offseth, previousY + squareSize + offsetv);
-			square[2].color = sf::Color::White;
-			square[3].position = sf::Vector2f(previousX + offseth, previousY + squareSize + offsetv);
-			//square[3].color = sf::Color::Black;
+			square.setPosition(previousX + offseth, previousY + offsetv);
+			square.setFillColor(sf::Color::White);
 			previousX = previousX + squareSize + offseth;
 			window.draw(square);
 		}
