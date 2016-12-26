@@ -2,22 +2,21 @@
 #include "square.h"
 
 void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset);
-void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, sf::RectangleShape &square);
+void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, Square &square);
 
 int main()
 {
-	//all global variables should be const
 	int width;
 	int height;
 	int numberSquareWidth = 15;
 	int numberSquareHeight = 15;
 	int squareSize = 20;
 	int offset = 1;
-
 	initializeGridValues(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset);
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Etienne's Game Of Life!");
-	sf::RectangleShape square(sf::Vector2f(squareSize, squareSize));
+	//sf::RectangleShape square(sf::Vector2f(squareSize, squareSize));
+	Square square(squareSize);
 
 	while (window.isOpen())
 	{
@@ -29,6 +28,7 @@ int main()
 		}
 		window.clear(sf::Color::Black);
 		drawGrid(width, height, squareSize, offset, window, square);
+		//window.draw(square);
 		window.display();
 	}
 	return 0;
@@ -59,7 +59,7 @@ void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &n
 	}
 }
 
-void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, sf::RectangleShape &square)
+void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, Square &square)
 {
 	int previousY = 0;
 	for (size_t j = 0; j < height; j += squareSize)
@@ -88,7 +88,7 @@ void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderW
 			}
 
 			square.setPosition(previousX + offseth, previousY + offsetv);
-			square.setFillColor(sf::Color::White);
+			//square.setFillColor(sf::Color::White);
 			previousX = previousX + squareSize + offseth;
 			window.draw(square);
 		}
