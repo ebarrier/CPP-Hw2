@@ -6,8 +6,7 @@
 void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, const int &offset);
 void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Square>> &matrix);
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix);
-void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
-void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
+void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
 
 int main()
@@ -44,8 +43,7 @@ int main()
 				changeSquareLife(matrix, cursorPos, squareSize);
 			}
 		}
-		mouseHover(numberSquareWidth, numberSquareHeight, matrix, cursorPos, squareSize);
-		//mouseHover(matrix, cursorPos, squareSize);
+		mouseHover(matrix, cursorPos, squareSize, offset);
 		window.clear(sf::Color::Black);
 		drawGrid(window, matrix);
 		window.display();
@@ -68,37 +66,12 @@ void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector
 	}
 }
 
-void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
+void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
 {
-	for (size_t i = 0; i < numberSquareWidth; i++)
-	{
-		for (size_t j = 0; j < numberSquareHeight; j++)
-		{
-			Square square = matrix[i][j];
-			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize)
-				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
-			{
-				//std::cout << "Square number: [" << i << "],[" << j << "]" << std::endl;
-				matrix[i][j].setFillColor(sf::Color::Yellow);
-			}
-		}
-	}
-}
-
-void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
-{
-	for (auto &vector : matrix)
-	{
-		for (auto &square : vector)
-		{
-			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize) 
-				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
-			{
-				//std::cout << "Collision" << static_cast<sf::Vector2f>(cursorPos).x <<"," << static_cast<sf::Vector2f>(cursorPos).y << std::endl;
-				square.setFillColor(sf::Color::Yellow);
-			}
-		}
-	}
+	int rowIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
+	int colIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
+	std::cout << "Square number: [" << rowIndex << "],[" << colIndex << "]" << std::endl;
+	matrix[rowIndex][colIndex].setFillColor(sf::Color::Blue);
 }
 
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix)
@@ -108,7 +81,6 @@ void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &
 		for (const auto &square : vector)
 		{
 			window.draw(square);
-			//std::cout << "Square pos: " << square.getPosition().x << "," << square.getPosition().y << std::endl;
 		}
 	}
 }
@@ -142,7 +114,7 @@ void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight
 			Square square(squareSize);
 			square.setPosition(previousX + offseth, previousY + offsetv);
 			matrix[row][col] = square;
-			//std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
+			std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
 			previousX = previousX + squareSize + offseth;
 		}
 		previousY = previousY + squareSize + offsetv;
