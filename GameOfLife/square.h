@@ -15,6 +15,7 @@ public:
 	void setSquareColor();
 	void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+	Square();
 	~Square();
 };
 

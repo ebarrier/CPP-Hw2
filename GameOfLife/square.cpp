@@ -3,8 +3,11 @@
 
 Square::Square(int squareSize) : square(sf::Vector2f(squareSize, squareSize)), isAlive(false)
 	{
-	this->setSquareColor();
 	}
+
+Square::Square()
+{
+}
 
 void Square::setSquareColor()
 {

@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <iostream>
 #include "square.h"
 
 void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset);
 void drawGrid(int &width, int &height, int &squareSize, int &offset, sf::RenderWindow &window, Square &square);
+void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, int &offset, sf::RenderWindow &window, std::vector<std::vector<Square>> &matrix);
 
 int main()
 {
@@ -16,8 +19,9 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Etienne's Game Of Life!");
 	//sf::RectangleShape square(sf::Vector2f(squareSize, squareSize));
-	Square square(squareSize);
-
+	//Square square(squareSize);
+	std::vector<std::vector<Square>> matrix(numberSquareWidth, std::vector<Square>(numberSquareHeight));
+	
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -25,9 +29,17 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			//if (event.type == sf::Event::MouseMoved)
+			//{
+			//	sf::Vector2i localPosition = sf::Mouse::getPosition(window); //get position of cursor
+
+
+			//}
 		}
 		window.clear(sf::Color::Black);
-		drawGrid(width, height, squareSize, offset, window, square);
+		drawGrid2(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset, window, matrix);
+		//drawGrid(width, height, squareSize, offset, window, square);
 		//window.draw(square);
 		window.display();
 	}
@@ -56,6 +68,50 @@ void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &n
 	{
 		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
 		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
+}
+
+void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, int &offset, sf::RenderWindow &window, std::vector<std::vector<Square>> &matrix)
+{
+	std::cout << "number of rows:" << numberSquareWidth << std::endl;
+	std::cout << "number of rows:" << numberSquareHeight << std::endl;
+
+	int previousY = 0;
+	for (size_t row = 0; row < numberSquareWidth; row++)
+	{
+		int offsetv;
+		if (row == 0)
+		{
+			offsetv = 0;
+		}
+		else
+		{
+			offsetv = offset;
+		}
+		std::cout << "row number is: " << row << std::endl;
+		int previousX = 0;
+		for (size_t col = 0; col < numberSquareHeight; col++)
+		{
+			Square square(squareSize);
+			matrix[row][col] = square;
+			std::cout << "col number is: " << col << std::endl;
+
+			int offseth;
+			if (col == 0)
+			{
+				offseth = 0;
+			}
+			else
+			{
+				offseth = offset;
+			}
+
+			square.setPosition(previousX + offseth, previousY + offsetv);
+			window.draw(square);
+			previousX = previousX + squareSize + offseth;
+		}
+		previousY = previousY + squareSize + offsetv;
+		std::cout << std::endl;
 	}
 }
 
