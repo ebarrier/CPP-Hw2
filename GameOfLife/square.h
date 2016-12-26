@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SQUARE_H
+#define SQUARE_H
 #include <SFML/Graphics.hpp>
 
 class Square : public sf::RectangleShape
@@ -17,3 +18,4 @@ public:
 	~Square();
 };
 
+#endif
