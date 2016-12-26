@@ -3,8 +3,9 @@
 #include <iostream>
 #include "square.h"
 
-void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset);
-void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, int &offset, sf::RenderWindow &window, std::vector<std::vector<Square>> &matrix);
+void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, const int &offset);
+void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Square>> &matrix);
+void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix);
 
 int main()
 {
@@ -14,14 +15,16 @@ int main()
 	int numberSquareHeight = 15;
 	int squareSize = 20;
 	int offset = 1;
-	initializeGridValues(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset);
+	initializeWindowGridValues(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset);
 
-	sf::RenderWindow window(sf::VideoMode(width, height), "Etienne's Game Of Life!");
+	sf::RenderWindow window(sf::VideoMode(width, height), "Stephan's Game Of Life!");
 	std::vector<std::vector<Square>> matrix(numberSquareWidth, std::vector<Square>(numberSquareHeight));
+	initiatlizeGrid(numberSquareWidth, numberSquareHeight, squareSize, offset, matrix);
 	
 	while (window.isOpen())
 	{
 		sf::Event event;
+		sf::Vector2i cursorPos;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
@@ -29,13 +32,26 @@ int main()
 
 			//if (event.type == sf::Event::MouseMoved)
 			//{
-			//	sf::Vector2i localPosition = sf::Mouse::getPosition(window); //get position of cursor
+			//	cursorPos = sf::Mouse::getPosition(window);
+			//}
 
-
+			//if (event.type == sf::Event::MouseEntered)
+			//{
+			//	for (auto &vector : matrix)
+			//	{
+			//		for (auto &square : vector)
+			//		{
+			//			std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
+			//			if (square.getGlobalBounds().contains(static_cast<sf::Vector2f>(cursorPos))) //does square contain position of cursor?
+			//			{	
+			//				square.setFillColor(sf::Color::Yellow);
+			//			}
+			//		}
+			//	}
 			//}
 		}
 		window.clear(sf::Color::Black);
-		drawGrid2(width, height, numberSquareWidth, numberSquareHeight, squareSize, offset, window, matrix);
+		drawGrid(window, matrix);
 		window.display();
 	}
 	return 0;
@@ -43,7 +59,7 @@ int main()
 
 
 
-void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, int &offset)
+void initializeWindowGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, const int &offset)
 {
 	if (nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1) > 1800 || nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1) > 900)
 	{
@@ -66,7 +82,7 @@ void initializeGridValues(int &width, int &height, int &nuberSquareWidth, int &n
 	}
 }
 
-void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, int &offset, sf::RenderWindow &window, std::vector<std::vector<Square>> &matrix)
+void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Square>> &matrix)
 {
 	int previousY = 0;
 	for (size_t row = 0; row < numberSquareWidth; row++)
@@ -83,9 +99,6 @@ void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquar
 		int previousX = 0;
 		for (size_t col = 0; col < numberSquareHeight; col++)
 		{
-			Square square(squareSize);
-			matrix[row][col] = square;
-
 			int offseth;
 			if (col == 0)
 			{
@@ -95,13 +108,26 @@ void drawGrid2(int &width, int &height, int &numberSquareWidth, int &numberSquar
 			{
 				offseth = offset;
 			}
-
+			Square square(squareSize);
 			square.setPosition(previousX + offseth, previousY + offsetv);
-			window.draw(square);
+			matrix[row][col] = square;
+			//std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
 			previousX = previousX + squareSize + offseth;
 		}
 		previousY = previousY + squareSize + offsetv;
 		std::cout << std::endl;
+	}
+}
+
+void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix)
+{
+	for (const auto &vector : matrix)
+	{
+		for (const auto &square : vector)
+		{
+			window.draw(square);
+			//std::cout << "Square pos: " << square.getPosition().x << "," << square.getPosition().y << std::endl;
+		}
 	}
 }
 
