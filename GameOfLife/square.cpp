@@ -17,6 +17,12 @@ void Square::setSquareColor()
 	}
 }
 
+void Square::setIsAlive(bool value) 
+{ 
+	isAlive = value;
+	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
+}
+
 void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

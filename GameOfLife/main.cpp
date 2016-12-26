@@ -8,6 +8,7 @@ void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix);
 void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
 void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
+void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
 
 int main()
 {
@@ -37,6 +38,11 @@ int main()
 				cursorPos = sf::Mouse::getPosition(window);
 				//std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
 			}
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				changeSquareLife(matrix, cursorPos, squareSize);
+			}
 		}
 		mouseHover(numberSquareWidth, numberSquareHeight, matrix, cursorPos, squareSize);
 		//mouseHover(matrix, cursorPos, squareSize);
@@ -45,6 +51,21 @@ int main()
 		window.display();
 	}
 	return 0;
+}
+
+void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
+{
+	for (auto &vector : matrix)
+	{
+		for (auto &square : vector)
+		{
+			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize)
+				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
+			{
+				square.getIsAlive() ? square.setIsAlive(false) : square.setIsAlive(true);
+			}
+		}
+	}
 }
 
 void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
