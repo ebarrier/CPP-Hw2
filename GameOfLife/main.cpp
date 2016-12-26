@@ -6,6 +6,8 @@
 void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, const int &offset);
 void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Square>> &matrix);
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix);
+void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
+void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
 
 int main()
 {
@@ -21,35 +23,23 @@ int main()
 	std::vector<std::vector<Square>> matrix(numberSquareWidth, std::vector<Square>(numberSquareHeight));
 	initiatlizeGrid(numberSquareWidth, numberSquareHeight, squareSize, offset, matrix);
 	
+	sf::Vector2i cursorPos;
 	while (window.isOpen())
 	{
 		sf::Event event;
-		sf::Vector2i cursorPos;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-			//if (event.type == sf::Event::MouseMoved)
-			//{
-			//	cursorPos = sf::Mouse::getPosition(window);
-			//}
-
-			//if (event.type == sf::Event::MouseEntered)
-			//{
-			//	for (auto &vector : matrix)
-			//	{
-			//		for (auto &square : vector)
-			//		{
-			//			std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
-			//			if (square.getGlobalBounds().contains(static_cast<sf::Vector2f>(cursorPos))) //does square contain position of cursor?
-			//			{	
-			//				square.setFillColor(sf::Color::Yellow);
-			//			}
-			//		}
-			//	}
-			//}
+			if (event.type == sf::Event::MouseMoved)
+			{
+				cursorPos = sf::Mouse::getPosition(window);
+				//std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
+			}
 		}
+		mouseHover(numberSquareWidth, numberSquareHeight, matrix, cursorPos, squareSize);
+		//mouseHover(matrix, cursorPos, squareSize);
 		window.clear(sf::Color::Black);
 		drawGrid(window, matrix);
 		window.display();
@@ -57,28 +47,48 @@ int main()
 	return 0;
 }
 
-
-
-void initializeWindowGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, const int &offset)
+void mouseHover(const int &numberSquareWidth, const int &numberSquareHeight, std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
 {
-	if (nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1) > 1800 || nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1) > 900)
+	for (size_t i = 0; i < numberSquareWidth; i++)
 	{
-		nuberSquareWidth = floor(1600 / squareSize);
-		nuberSquareHeight = floor(900 / squareSize);
-		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
-		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+		for (size_t j = 0; j < numberSquareHeight; j++)
+		{
+			Square square = matrix[i][j];
+			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize)
+				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
+			{
+				//std::cout << "Square number: [" << i << "],[" << j << "]" << std::endl;
+				matrix[i][j].setFillColor(sf::Color::Yellow);
+			}
+		}
 	}
-	else if (nuberSquareWidth < 5 || nuberSquareHeight < 5)
+}
+
+void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
+{
+	for (auto &vector : matrix)
 	{
-		nuberSquareWidth = 5;
-		nuberSquareHeight = 5;
-		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
-		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+		for (auto &square : vector)
+		{
+			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize) 
+				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
+			{
+				//std::cout << "Collision" << static_cast<sf::Vector2f>(cursorPos).x <<"," << static_cast<sf::Vector2f>(cursorPos).y << std::endl;
+				square.setFillColor(sf::Color::Yellow);
+			}
+		}
 	}
-	else
+}
+
+void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix)
+{
+	for (const auto &vector : matrix)
 	{
-		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
-		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+		for (const auto &square : vector)
+		{
+			window.draw(square);
+			//std::cout << "Square pos: " << square.getPosition().x << "," << square.getPosition().y << std::endl;
+		}
 	}
 }
 
@@ -119,15 +129,25 @@ void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight
 	}
 }
 
-void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix)
+void initializeWindowGridValues(int &width, int &height, int &nuberSquareWidth, int &nuberSquareHeight, int &squareSize, const int &offset)
 {
-	for (const auto &vector : matrix)
+	if (nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1) > 1800 || nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1) > 900)
 	{
-		for (const auto &square : vector)
-		{
-			window.draw(square);
-			//std::cout << "Square pos: " << square.getPosition().x << "," << square.getPosition().y << std::endl;
-		}
+		nuberSquareWidth = floor(1600 / squareSize);
+		nuberSquareHeight = floor(900 / squareSize);
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
+	else if (nuberSquareWidth < 5 || nuberSquareHeight < 5)
+	{
+		nuberSquareWidth = 5;
+		nuberSquareHeight = 5;
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
+	}
+	else
+	{
+		width = ceil(nuberSquareWidth * squareSize + offset * (nuberSquareWidth - 1));
+		height = ceil(nuberSquareHeight * squareSize + offset * (nuberSquareHeight - 1));
 	}
 }
-
