@@ -7,7 +7,7 @@ void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth,
 void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Square>> &matrix);
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Square>> &matrix);
 void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
-void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize);
+void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 
 int main()
 {
@@ -40,10 +40,10 @@ int main()
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				changeSquareLife(matrix, cursorPos, squareSize);
+				changeSquareLife(matrix, cursorPos, squareSize, offset);
 			}
 		}
-		mouseHover(matrix, cursorPos, squareSize, offset);
+		//mouseHover(matrix, cursorPos, squareSize, offset);
 		window.clear(sf::Color::Black);
 		drawGrid(window, matrix);
 		window.display();
@@ -51,19 +51,11 @@ int main()
 	return 0;
 }
 
-void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize)
+void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
 {
-	for (auto &vector : matrix)
-	{
-		for (auto &square : vector)
-		{
-			if (cursorPos.x >= square.getPosition().x && cursorPos.x <= (square.getPosition().x + squareSize)
-				&& cursorPos.y >= square.getPosition().y && cursorPos.y <= (square.getPosition().y + squareSize))
-			{
-				square.getIsAlive() ? square.setIsAlive(false) : square.setIsAlive(true);
-			}
-		}
-	}
+	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
+	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
+	matrix[rowIndex][colIndex].getIsAlive() ? matrix[rowIndex][colIndex].setIsAlive(false) : matrix[rowIndex][colIndex].setIsAlive(true);
 }
 
 void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
