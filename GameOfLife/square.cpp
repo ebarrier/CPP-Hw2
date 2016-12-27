@@ -1,7 +1,7 @@
 #include "square.h"
 #include <SFML/Graphics.hpp>
 
-Square::Square(int squareSize) : square(sf::Vector2f(squareSize, squareSize)), isAlive(false)
+Square::Square(int squareSize) : RectangleShape(sf::Vector2f(squareSize, squareSize)), isAlive(false)
 	{
 	}
 
@@ -23,11 +23,11 @@ void Square::setIsAlive(bool value)
 	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
 }
 
-void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	states.transform *= getTransform();
-	target.draw(square, states);
-}
+//void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const
+//{
+//	states.transform *= getTransform();
+//	target.draw(states);
+//}
 
 Square::~Square()
 {

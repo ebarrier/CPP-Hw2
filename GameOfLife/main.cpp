@@ -68,8 +68,8 @@ void changeSquareLife(std::vector<std::vector<Square>> &matrix, const sf::Vector
 
 void mouseHover(std::vector<std::vector<Square>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
 {
-	int rowIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
-	int colIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
+	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
+	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
 	std::cout << "Square number: [" << rowIndex << "],[" << colIndex << "]" << std::endl;
 	matrix[rowIndex][colIndex].setFillColor(sf::Color::Blue);
 }
@@ -114,11 +114,11 @@ void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight
 			Square square(squareSize);
 			square.setPosition(previousX + offseth, previousY + offsetv);
 			matrix[row][col] = square;
-			std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
+			//std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
 			previousX = previousX + squareSize + offseth;
 		}
 		previousY = previousY + squareSize + offsetv;
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 }
 

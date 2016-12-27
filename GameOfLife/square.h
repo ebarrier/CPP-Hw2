@@ -5,7 +5,6 @@
 class Square : public sf::RectangleShape
 {
 private:
-	sf::RectangleShape square;
 	bool isAlive;
 
 public:
@@ -13,7 +12,7 @@ public:
 	bool getIsAlive() { return isAlive; }
 	void setIsAlive(bool value);
 	void setSquareColor();
-	void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	//void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	Square();
 	~Square();
