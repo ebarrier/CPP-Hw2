@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include "cell.h"
+#include "game.h"
+#include "grid.h"
 
 void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, const int &offset);
 void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Cell>> &matrix);
@@ -11,6 +13,13 @@ void changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i
 
 int main()
 {
+	Grid grid(15, 15, 20, 1);
+	Game game(grid, "Stephan's Game Of Life!");
+	game.run();
+
+	/*
+	Game game(width, height);
+	game.run();
 	int width;
 	int height;
 	int numberSquareWidth = 15;
@@ -49,6 +58,7 @@ int main()
 		window.display();
 	}
 	return 0;
+	*/
 }
 
 void changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)

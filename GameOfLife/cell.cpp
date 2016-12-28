@@ -1,13 +1,9 @@
 #include "cell.h"
 #include <SFML/Graphics.hpp>
 
-Cell::Cell(int squareSize) : RectangleShape(sf::Vector2f(squareSize, squareSize)), isAlive(false)
-	{
-	}
+Cell::Cell(int squareSize) : RectangleShape(sf::Vector2f(squareSize, squareSize)), isAlive(false) {}
 
-Cell::Cell()
-{
-}
+Cell::Cell() {}
 
 void Cell::setSquareColor()
 {
@@ -23,6 +19,4 @@ void Cell::setIsAlive(bool value)
 	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
 }
 
-Cell::~Cell()
-{
-}
+Cell::~Cell() {}
