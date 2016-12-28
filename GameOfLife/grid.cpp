@@ -6,6 +6,7 @@
 #include <iostream>
 
 Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int offset)
+	: numberSquareWidth(numberSquareWidth), numberSquareHeight(numberSquareHeight), squareSize(squareSize), offset(offset)
 {
 	matrix.resize(numberSquareWidth, std::vector<Cell>(numberSquareHeight));
 	int previousY = 0;
@@ -69,6 +70,8 @@ std::array<int, 2> Grid::getWidthHeight()
 	}
 	widthHeight[0] = width;
 	widthHeight[1] = height;
+	std::cout << "width " << width << std::endl;
+	std::cout << "height " << height << std::endl;
 	return widthHeight;
 }
 

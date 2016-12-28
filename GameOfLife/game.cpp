@@ -5,10 +5,14 @@
 #include <iostream>
 
 Game::Game(Grid grid, std::string windowTitle)
-	: width(grid.getWidthHeight().at(0)), height(grid.getWidthHeight().at(1)), grid(grid), window(sf::VideoMode(width, height), windowTitle) {}
+	: grid(grid), window(sf::VideoMode(grid.getWidthHeight().at(0), grid.getWidthHeight().at(1)), windowTitle) {}
 
 void Game::run()
 {
+	//std::cout << "width " << width << std::endl;
+	//std::cout << "height " << height << std::endl;
+	//std::cout << "gridwidth " << grid.getWidthHeight().at(0) << std::endl;
+	//std::cout << "gridheight " << grid.getWidthHeight().at(1) << std::endl;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -42,7 +46,7 @@ void Game::drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell
 		for (const auto &square : vector)
 		{
 			window.draw(square);
-			std::cout << "Square position x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
+			//std::cout << "Square position x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
 		}
 	}
 }
