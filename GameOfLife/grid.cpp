@@ -70,8 +70,6 @@ std::array<int, 2> Grid::getWidthHeight()
 	}
 	widthHeight[0] = width;
 	widthHeight[1] = height;
-	std::cout << "width " << width << std::endl;
-	std::cout << "height " << height << std::endl;
 	return widthHeight;
 }
 

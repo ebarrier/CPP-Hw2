@@ -15,7 +15,7 @@ void Cell::setSquareColor()
 
 void Cell::setIsAlive(bool value) 
 { 
-	isAlive = value;
+	this->isAlive = value;
 	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
 }
 
