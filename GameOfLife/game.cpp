@@ -25,7 +25,7 @@ void Game::run()
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				changeSquareLife(grid.getMatrix(), cursorPos, grid.getSquareSize(), grid.getOffset());
+				grid.changeSquareLife(cursorPos, grid.getSquareSize(), grid.getOffset());
 			}
 		}
 		//mouseHover(grid.getMatrix(), cursorPos, grid.getSquareSize(), grid.getOffset());
@@ -33,15 +33,6 @@ void Game::run()
 		drawGrid(window, grid.getMatrix());
 		window.display();
 	}
-}
-
-void  Game::changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
-{
-	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
-	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
-	std::cout << "cell positiion [" << rowIndex << "][" << colIndex << "]" << std::endl;
-	std::cout << "cell status: " << matrix[rowIndex][colIndex].getIsAlive() << std::endl;
-	matrix[rowIndex][colIndex].getIsAlive() ? matrix[rowIndex][colIndex].setIsAlive(false) : matrix[rowIndex][colIndex].setIsAlive(true);
 }
 
 void Game::drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell>> &matrix)

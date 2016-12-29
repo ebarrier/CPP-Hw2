@@ -15,10 +15,12 @@ private:
 
 public:
 	Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int offset);
-	std::array<int, 2> getWidthHeight();
-	std::vector<std::vector<Cell>> getMatrix() { return matrix; }
+	std::vector<std::vector<Cell>>& getMatrix() { return matrix; }
 	int getOffset() { return offset; }
 	int getSquareSize() { return squareSize; }
+
+	std::array<int, 2> getWidthHeight();
+	void Grid::changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 
 	Grid();
 	~Grid();
