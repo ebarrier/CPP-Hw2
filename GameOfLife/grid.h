@@ -21,6 +21,7 @@ public:
 
 	std::array<int, 2> getWidthHeight();
 	void Grid::changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
+	//void Grid::startAnimation(Grid &grid);
 
 	Grid();
 	~Grid();

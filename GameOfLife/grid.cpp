@@ -44,12 +44,39 @@ Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int of
 	}
 }
 
+//void Grid::startAnimation(Grid &grid)
+//{
+//	static sf::Clock s_clock;
+//	sf::Time elapsed = s_clock.getElapsedTime();
+//	if (elapsed.asSeconds() > 1.00f)
+//	{
+//		static bool count = false;
+//		for (auto &vector : grid.getMatrix())
+//		{
+//			for (auto &square : vector)
+//			{
+//				if (square.getIsAlive() && count)
+//				{
+//					square.setFillColor(sf::Color::Blue);
+//					!count;
+//				}
+//				if (square.getIsAlive() && !count)
+//				{
+//					square.setFillColor(sf::Color::Yellow);
+//					!count;
+//				}
+//			}
+//		}
+//		s_clock.restart();
+//	}
+//}
+
 void Grid::changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
 {
 	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
 	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
-	std::cout << "cell position [" << rowIndex << "][" << colIndex << "]" << std::endl;
-	std::cout << "cell status: " << matrix[rowIndex][colIndex].getIsAlive() << std::endl;
+	//std::cout << "cell position [" << rowIndex << "][" << colIndex << "]" << std::endl;
+	//std::cout << "cell status: " << matrix[rowIndex][colIndex].getIsAlive() << std::endl;
 	matrix[rowIndex][colIndex].getIsAlive() ? matrix[rowIndex][colIndex].setIsAlive(false) : matrix[rowIndex][colIndex].setIsAlive(true);
 }
 

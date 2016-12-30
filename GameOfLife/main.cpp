@@ -8,7 +8,6 @@
 void initializeWindowGridValues(int &width, int &height, int &numberSquareWidth, int &numberSquareHeight, int &squareSize, const int &offset);
 void initiatlizeGrid(const int &numberSquareWidth, const int &numberSquareHeight, const int &squareSize, const int &offset, std::vector<std::vector<Cell>> &matrix);
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell>> &matrix);
-void mouseHover(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 void changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 
 int main()
@@ -18,8 +17,6 @@ int main()
 	game.run();
 
 	/*
-	Game game(width, height);
-	game.run();
 	int width;
 	int height;
 	int numberSquareWidth = 15;
@@ -66,14 +63,6 @@ void changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i
 	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
 	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
 	matrix[rowIndex][colIndex].getIsAlive() ? matrix[rowIndex][colIndex].setIsAlive(false) : matrix[rowIndex][colIndex].setIsAlive(true);
-}
-
-void mouseHover(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
-{
-	int colIndex = floor((cursorPos.x - (offset * floor(cursorPos.x / squareSize))) / squareSize);
-	int rowIndex = floor((cursorPos.y - (offset * floor(cursorPos.y / squareSize))) / squareSize);
-	std::cout << "Square number: [" << rowIndex << "],[" << colIndex << "]" << std::endl;
-	matrix[rowIndex][colIndex].setFillColor(sf::Color::Blue);
 }
 
 void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell>> &matrix)
