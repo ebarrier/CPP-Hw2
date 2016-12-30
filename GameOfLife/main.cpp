@@ -12,7 +12,7 @@ void changeSquareLife(std::vector<std::vector<Cell>> &matrix, const sf::Vector2i
 
 int main()
 {
-	Grid grid(15, 15, 20, 1);
+	Grid grid(6, 5, 20, 1);
 	Game game(grid, "Stephan's Game Of Life!");
 	game.run();
 

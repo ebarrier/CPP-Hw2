@@ -5,18 +5,15 @@ Cell::Cell(int squareSize) : RectangleShape(sf::Vector2f(squareSize, squareSize)
 
 Cell::Cell() {}
 
-void Cell::setSquareColor()
-{
-	if (!this->getIsAlive())
-	{
-		this->setFillColor(sf::Color::Blue);
-	}
-}
-
 void Cell::setIsAlive(bool value) 
 { 
 	this->isAlive = value;
 	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
+}
+
+void Cell::setNumAliveNeighbours(int count)
+{
+	numAliveNeighbours = count;
 }
 
 Cell::~Cell() {}

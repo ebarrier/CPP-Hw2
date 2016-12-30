@@ -35,12 +35,45 @@ Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int of
 			}
 			Cell square(squareSize);
 			square.setPosition(previousX + offseth, previousY + offsetv);
+			square.col = col;
+			square.row = row;
 			matrix[row][col] = square;
 			//std::cout << "Square position:" << row << "," << col << " x:" << square.getPosition().x << " y:" << square.getPosition().y << std::endl;
 			previousX = previousX + squareSize + offseth;
 		}
 		previousY = previousY + squareSize + offsetv;
 		//std::cout << std::endl;
+	}
+}
+
+void Grid::checkLiveNeighbours()
+{
+	int count = 0;
+	for (size_t row = 0; row < numberSquareHeight; row++)
+	{
+		for (size_t col = 0; col < numberSquareWidth; col++)
+		{
+			if (row > 0 && row < numberSquareHeight-1 && col > 0 && col < numberSquareWidth-1)
+			{
+				for (int i = -1; i <= 1; i++)
+				{
+					for (int j = -1; j <= 1; j++)
+					{
+						if (i==0 && j == 0)
+						{
+							break;
+						}
+						if (matrix[row+i][col+j].getIsAlive())
+						{
+							count++;
+						}
+					}
+				}
+				matrix[row][col].setNumAliveNeighbours(count);
+				std::cout << "cell position [" << row << "][" << col << "]: " << count << std::endl;
+				count = 0;
+			}
+		}
 	}
 }
 

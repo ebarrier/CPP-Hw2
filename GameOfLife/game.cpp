@@ -18,23 +18,44 @@ void Game::run()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-			if (event.type == sf::Event::MouseMoved)
-			{
-				cursorPos = sf::Mouse::getPosition(window);
-				//std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
-			}
-
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				grid.changeSquareLife(cursorPos, grid.getSquareSize(), grid.getOffset());
-			}
-
 			if (window.hasFocus())
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				if (event.type == sf::Event::MouseMoved)
 				{
-					startAnimation(window, grid);
-					break;
+					cursorPos = sf::Mouse::getPosition(window);
+					//std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
+				}
+				if (event.type == sf::Event::MouseButtonReleased)
+				{
+					if (event.mouseButton.button == sf::Mouse::Left)
+					{
+						grid.changeSquareLife(cursorPos, grid.getSquareSize(), grid.getOffset());
+					}
+				}
+				
+				if (event.type == sf::Event::KeyReleased)
+				{
+					if (event.key.code == sf::Keyboard::Space)
+					{
+						grid.checkLiveNeighbours();
+						//startAnimation(window, grid);
+						int count = 0;
+						for (auto &vector : grid.getMatrix())
+						{
+							for (auto &square : vector)
+							{
+								if (square.getIsAlive())
+								{
+									std::cout << "[" << square.row << "," << square.col << "]" << std::endl;
+								}
+								if (square.getNumAliveNeighbours() > 0)
+								{
+									count++;
+								}
+							}
+						}
+						std::cout << count << std::endl;
+					}
 				}
 			}
 		}

@@ -6,12 +6,17 @@ class Cell : public sf::RectangleShape
 {
 private:
 	bool isAlive;
+	int numAliveNeighbours;
 
 public:
+	int row;
+	int col;
 	Cell(int squareSize);
+
 	bool getIsAlive() { return isAlive; }
 	void setIsAlive(bool value);
-	void setSquareColor();
+	int getNumAliveNeighbours() { return numAliveNeighbours; }
+	void setNumAliveNeighbours(int count);
 
 	Cell();
 	~Cell();
