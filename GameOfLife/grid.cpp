@@ -53,26 +53,128 @@ void Grid::checkLiveNeighbours()
 	{
 		for (size_t col = 0; col < numberSquareWidth; col++)
 		{
-			if (row > 0 && row < numberSquareHeight-1 && col > 0 && col < numberSquareWidth-1)
+			if (row == 0)
+			{
+				if (col == 0)
+				{
+					if (matrix[row][col + 1].getIsAlive())
+						count++;
+					if (matrix[row + 1][col].getIsAlive())
+						count++;
+					if (matrix[row + 1][col + 1].getIsAlive())
+						count++;
+				}
+
+				if (col == numberSquareWidth - 1)
+				{
+					if (matrix[row][col - 1].getIsAlive())
+						count++;
+					if (matrix[row + 1][col - 1].getIsAlive())
+						count++;
+					if (matrix[row + 1][col].getIsAlive())
+						count++;
+				}
+
+				if (col > 0 && col < numberSquareWidth - 1)
+				{
+					if (matrix[row][col - 1].getIsAlive())
+						count++;
+					if (matrix[row][col + 1].getIsAlive())
+						count++;
+					if (matrix[row + 1][col - 1].getIsAlive())
+						count++;
+					if (matrix[row + 1][col].getIsAlive())
+						count++;
+					if (matrix[row + 1][col +1].getIsAlive())
+						count++;
+				}
+			}
+
+			if (row == numberSquareHeight - 1)
+			{
+				if (col == 0)
+				{
+					if (matrix[row][col + 1].getIsAlive())
+						count++;
+					if (matrix[row - 1][col].getIsAlive())
+						count++;
+					if (matrix[row - 1][col + 1].getIsAlive())
+						count++;
+				}
+
+				if (col == numberSquareWidth - 1)
+				{
+					if (matrix[row][col - 1].getIsAlive())
+						count++;
+					if (matrix[row - 1][col - 1].getIsAlive())
+						count++;
+					if (matrix[row - 1][col].getIsAlive())
+						count++;
+				}
+
+				if (col > 0 && col < numberSquareWidth - 1)
+				{
+					if (matrix[row][col - 1].getIsAlive())
+						count++;
+					if (matrix[row][col + 1].getIsAlive())
+						count++;
+					if (matrix[row - 1][col - 1].getIsAlive())
+						count++;
+					if (matrix[row - 1][col].getIsAlive())
+						count++;
+					if (matrix[row - 1][col + 1].getIsAlive())
+						count++;
+				}
+			}
+
+			if (col == 0 && row > 0 && row < numberSquareHeight - 1)
+			{
+				if (matrix[row - 1][col].getIsAlive())
+					count++;
+				if (matrix[row - 1][col + 1].getIsAlive())
+					count++;
+				if (matrix[row][col + 1].getIsAlive())
+					count++;
+				if (matrix[row + 1][col].getIsAlive())
+					count++;
+				if (matrix[row + 1][col + 1].getIsAlive())
+					count++;
+			}
+
+			if (col == (numberSquareWidth - 1) && row > 0 && row < (numberSquareHeight - 1))
+			{
+				if (matrix[row - 1][col].getIsAlive())
+					count++;
+				if (matrix[row - 1][col - 1].getIsAlive())
+					count++;
+				if (matrix[row][col - 1].getIsAlive())
+					count++;
+				if (matrix[row + 1][col].getIsAlive())
+					count++;
+				if (matrix[row + 1][col - 1].getIsAlive())
+					count++;
+			}
+
+			if (row > 0 && row < numberSquareHeight - 1 && col > 0 && col < numberSquareWidth - 1)
 			{
 				for (int i = -1; i <= 1; i++)
 				{
 					for (int j = -1; j <= 1; j++)
 					{
-						if (i==0 && j == 0)
+						if (i == 0 && j == 0)
 						{
-							break;
+							continue;
 						}
-						if (matrix[row+i][col+j].getIsAlive())
+						if (matrix[row + i][col + j].getIsAlive())
 						{
 							count++;
 						}
 					}
 				}
-				matrix[row][col].setNumAliveNeighbours(count);
-				std::cout << "cell position [" << row << "][" << col << "]: " << count << std::endl;
-				count = 0;
 			}
+			matrix[row][col].setNumAliveNeighbours(count);
+			std::cout << "cell position [" << row << "][" << col << "]: " << count << std::endl;
+			count = 0;
 		}
 	}
 }
