@@ -8,9 +8,9 @@
 Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int offset)
 	: numberSquareWidth(numberSquareWidth), numberSquareHeight(numberSquareHeight), squareSize(squareSize), offset(offset)
 {
-	matrix.resize(numberSquareWidth, std::vector<Cell>(numberSquareHeight));
+	matrix.resize(numberSquareHeight, std::vector<Cell>(numberSquareWidth));
 	int previousY = 0;
-	for (size_t row = 0; row < numberSquareWidth; row++)
+	for (size_t row = 0; row < numberSquareHeight; row++)
 	{
 		int offsetv;
 		if (row == 0)
@@ -22,7 +22,7 @@ Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int of
 			offsetv = offset;
 		}
 		int previousX = 0;
-		for (size_t col = 0; col < numberSquareHeight; col++)
+		for (size_t col = 0; col < numberSquareWidth; col++)
 		{
 			int offseth;
 			if (col == 0)
@@ -43,33 +43,6 @@ Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int of
 		//std::cout << std::endl;
 	}
 }
-
-//void Grid::startAnimation(Grid &grid)
-//{
-//	static sf::Clock s_clock;
-//	sf::Time elapsed = s_clock.getElapsedTime();
-//	if (elapsed.asSeconds() > 1.00f)
-//	{
-//		static bool count = false;
-//		for (auto &vector : grid.getMatrix())
-//		{
-//			for (auto &square : vector)
-//			{
-//				if (square.getIsAlive() && count)
-//				{
-//					square.setFillColor(sf::Color::Blue);
-//					!count;
-//				}
-//				if (square.getIsAlive() && !count)
-//				{
-//					square.setFillColor(sf::Color::Yellow);
-//					!count;
-//				}
-//			}
-//		}
-//		s_clock.restart();
-//	}
-//}
 
 void Grid::changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize, const int &offset)
 {
@@ -101,7 +74,7 @@ std::array<int, 2> Grid::getWidthHeight()
 	}
 	else
 	{
-		width = ceil(numberSquareWidth * squareSize + offset * (numberSquareHeight - 1));
+		width = ceil(numberSquareWidth * squareSize + offset * (numberSquareWidth - 1));
 		height = ceil(numberSquareHeight * squareSize + offset * (numberSquareHeight - 1));
 	}
 	widthHeight[0] = width;
