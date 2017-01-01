@@ -9,8 +9,6 @@ private:
 	int numAliveNeighbours;
 
 public:
-	int row;
-	int col;
 	Cell(int squareSize);
 
 	bool getIsAlive() { return isAlive; }

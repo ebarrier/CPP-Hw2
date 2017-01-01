@@ -14,7 +14,7 @@ private:
 
 public:
 	Game(Grid &grid, std::string windowTitle);
-	void run();
+	void init();
 	void startAnimation(sf::RenderWindow &window, Grid &grid);
 
 	Game();

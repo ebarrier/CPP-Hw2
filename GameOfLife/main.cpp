@@ -3,7 +3,7 @@
 
 int main()
 {
-	Grid grid(6, 5, 20, 1);
+	Grid grid(100, 50, 15, 1);
 	Game game(grid, "Stephan's Game Of Life!");
-	game.run();
+	game.init();
 }
