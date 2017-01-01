@@ -20,4 +20,4 @@ The first window will display a grid which cells can be turned alive/dead by cli
 `Space` bar toggles the animation of cells to run or to pause.  
 While animation is paused, one can click on cells to swith their life state.  
 While animation is running, it is not possible to click on cells to switch their life state.  
-At any moment the `R` key reset the game to the original state.
+At any moment the `R` key resets the game to the original state.
