@@ -1,6 +1,6 @@
 ﻿# Conway's Game of Life  
 The programme is a school **C++** project for the 'Basics of C/C++' course, semester 3.  
-It uses **[SFML]**(http://www.sfml-dev.org/) (Simple and Fast Multimedia Library).  
+It uses [**SFML**](http://www.sfml-dev.org/) (Simple and Fast Multimedia Library).  
 
 ##Author  
 Author of  project is **Etienne Barrier**.  
