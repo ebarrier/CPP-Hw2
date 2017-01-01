@@ -7,8 +7,8 @@ Cell::Cell() {}
 
 void Cell::setIsAlive(bool value) 
 { 
-	this->isAlive = value;
-	value ? this->setFillColor(sf::Color::Black) : this->setFillColor(sf::Color::White);
+	isAlive = value;
+	value ? setFillColor(sf::Color::Black) : setFillColor(sf::Color::White);
 }
 
 void Cell::setNumAliveNeighbours(int count)
