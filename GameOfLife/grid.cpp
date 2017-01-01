@@ -46,6 +46,18 @@ Grid::Grid(int numberSquareWidth, int numberSquareHeight, int squareSize, int of
 	}
 }
 
+void Grid::resetGrid()
+{
+	std::cout << "resetGrid Called" << std::endl;
+	for (auto &vector : matrix)
+	{
+		for (auto &cell : vector)
+		{
+			cell.setIsAlive(false);
+		}
+	}
+}
+
 void Grid::nextGeneration()
 {
 	for (auto &vector : matrix)
@@ -222,8 +234,10 @@ void Grid::changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize
 	//std::cout << "cell status: " << matrix[rowIndex][colIndex].getIsAlive() << std::endl;
 }
 
-//Depending on number of cells for width/height, cell size and offet, determine best widht and height for the windows (in pixels)
-//This is to avoid extreme large/small windows
+/*
+Depending on number of cells for width/height, cell size and offet, determine best widht and height for the windows (in pixels)
+This is to avoid extreme large/small windows
+*/
 std::array<int, 2> Grid::getWidthHeight()
 {
 	std::array<int, 2> widthHeight;

@@ -15,6 +15,12 @@ void Game::init()
 	std::cout << "Init mode" << std::endl; //we know from the console that we are in init mode
 	while (window.isOpen())
 	{
+		if (getReset())
+		{
+			grid.resetGrid();
+			setReset(false);
+		}
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -43,6 +49,11 @@ void Game::init()
 						//when space bar is pressed, start animation mode of the GOL
 						startAnimation(window, grid);
 					}
+					if (event.key.code == sf::Keyboard::R)
+					{
+						//when R key is pressed, reset grid in init mode
+						setReset(true);
+					}
 				}
 			}
 		}
@@ -70,6 +81,12 @@ void Game::startAnimation(sf::RenderWindow &window, Grid &grid)
 				{
 					init(); //when space bar is pressed, return to init mode
 				}
+				if (event.key.code == sf::Keyboard::R)
+				{
+					//when R key is pressed, reset grid in init mode
+					setReset(true);
+					init();
+				}
 			}
 		}
 
@@ -86,6 +103,11 @@ void Game::startAnimation(sf::RenderWindow &window, Grid &grid)
 		window.draw(grid);
 		window.display();
 	}
+}
+
+void Game::setReset(bool value) 
+{ 
+	reset = value; 
 }
 
 Game::Game()
