@@ -256,13 +256,13 @@ std::array<int, 2> Grid::getWidthHeight()
 	return widthHeight;
 }
 
-void Grid::drawGrid(sf::RenderWindow &window)
+void Grid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for (const auto vector : matrix)
 	{
 		for (const auto square : vector)
 		{
-			window.draw(square);
+			target.draw(square, states);
 		}
 	}
 }

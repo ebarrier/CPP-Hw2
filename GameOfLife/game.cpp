@@ -47,7 +47,7 @@ void Game::init()
 			}
 		}
 		window.clear(sf::Color(220,220,220,255)); //window has grey background
-		grid.drawGrid(window);
+		window.draw(grid);
 		window.display();
 	}
 }
@@ -83,7 +83,7 @@ void Game::startAnimation(sf::RenderWindow &window, Grid &grid)
 		}
 		
 		window.clear(sf::Color(220, 220, 220, 255));
-		grid.drawGrid(window);
+		window.draw(grid);
 		window.display();
 	}
 }
