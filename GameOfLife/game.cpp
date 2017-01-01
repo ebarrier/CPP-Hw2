@@ -47,7 +47,7 @@ void Game::init()
 			}
 		}
 		window.clear(sf::Color(220,220,220,255)); //window has grey background
-		drawGrid(window, grid.getMatrix());
+		grid.drawGrid(window);
 		window.display();
 	}
 }
@@ -83,19 +83,8 @@ void Game::startAnimation(sf::RenderWindow &window, Grid &grid)
 		}
 		
 		window.clear(sf::Color(220, 220, 220, 255));
-		drawGrid(window, grid.getMatrix());
+		grid.drawGrid(window);
 		window.display();
-	}
-}
-
-void Game::drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell>> &matrix)
-{
-	for (const auto &vector : matrix)
-	{
-		for (const auto &square : vector)
-		{
-			window.draw(square);
-		}
 	}
 }
 

@@ -10,7 +10,6 @@ private:
 	Grid grid;
 	sf::RenderWindow window;
 	sf::Vector2i cursorPos;
-	void drawGrid(sf::RenderWindow &window, const std::vector<std::vector<Cell>> &matrix);
 
 public:
 	Game(Grid &grid, std::string windowTitle);

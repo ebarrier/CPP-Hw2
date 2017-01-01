@@ -19,6 +19,7 @@ public:
 	int getOffset() { return offset; }
 	int getSquareSize() { return squareSize; }
 
+	void Grid::drawGrid(sf::RenderWindow &window);
 	std::array<int, 2> getWidthHeight();
 	void changeSquareLife(const sf::Vector2i &cursorPos, const int &squareSize, const int &offset);
 	void checkLiveNeighbours();

@@ -256,6 +256,17 @@ std::array<int, 2> Grid::getWidthHeight()
 	return widthHeight;
 }
 
+void Grid::drawGrid(sf::RenderWindow &window)
+{
+	for (const auto vector : matrix)
+	{
+		for (const auto square : vector)
+		{
+			window.draw(square);
+		}
+	}
+}
+
 Grid::Grid()
 {
 }
